@@ -1,7 +1,7 @@
-POST http://localhost:3001/api/persons/
+POST https://phonebookbackend-sxee.onrender.com/api/persons/
 Content-Type: application/json
 
 {
     "name":"Joku Testi",
-    "number":"124324255"
+    "number":"12432664255"
 }
