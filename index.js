@@ -4,7 +4,7 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
-const mongoose = require('mongoose')
+//const mongoose = require('mongoose')
 
 app.use(express.static('dist'))
 app.use(express.json())
@@ -12,12 +12,12 @@ app.use(express.json())
 
 
 morgan.token('body', (req) => {
-  return req.method === 'POST' ? JSON.stringify(req.body) : '';
-});
+  return req.method === 'POST' ? JSON.stringify(req.body) : ''
+})
 
 app.use(
   morgan(':method :url :status :res[content-length] - :response-time ms :body')
-);
+)
 
 const Person = require('./models/person')
 
@@ -27,9 +27,9 @@ app.get('/', (request, response) => {
 
 app.get('/api/persons', (request, response) => {
   Person.find({}).then(persons => {
-    response.json(persons);
-  });
-});
+    response.json(persons)
+  })
+})
 
 app.get('/api/persons/:id', (request, response, next) => {
   Person.findById(request.params.id)
@@ -47,6 +47,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
   Person.findByIdAndDelete(request.params.id)
     .then(result => {
       response.status(204).end()
+      console.log(result)
     })
     .catch(error => next(error))
 })
@@ -99,11 +100,11 @@ app.put('/api/persons/:id', (request, response, next) => {
 
 app.get('/info', (request, response, next) => {
   Person.countDocuments({}).then(count => {
-    var date_time = new Date();
-    console.log("returned info to frontend in response object")
-    response.send("Phonebook has info for " + count + " people"+"<br>"+date_time)
+    var date_time = new Date()
+    console.log('returned info to frontend in response object')
+    response.send('Phonebook has info for ' + count + ' people'+'<br>'+date_time)
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 const unknownEndpoint = (request, response) => {
